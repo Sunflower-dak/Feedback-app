@@ -1,12 +1,5 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
-
-type feedBackObj = {
-  upvoteCount: number;
-  badgeLetter: string;
-  company: string;
-  text: string;
-  daysAgo: number;
-};
+import { feedBackObj } from "../lib/types";
 
 type feedBackObjectProp = { feedBackObj: feedBackObj };
 

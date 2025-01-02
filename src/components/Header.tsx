@@ -3,13 +3,17 @@ import HeroCopy from "./HeroCopy";
 import Logo from "./Logo";
 import Pattern from "./Pattern";
 
-export default function Header() {
+type headerProp = {
+  handleAddToArea: (text: string) => void;
+};
+
+export default function Header({ handleAddToArea }: headerProp) {
   return (
     <header>
       <Pattern />
       <Logo />
       <HeroCopy />
-      <FeedbackForm />
+      <FeedbackForm onAddToArea={handleAddToArea} />
     </header>
   );
 }
