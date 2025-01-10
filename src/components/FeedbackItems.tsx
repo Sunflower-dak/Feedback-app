@@ -18,7 +18,10 @@ export default function FeedbackItems({ feedBackObj }: feedBackObjectProp) {
           <p>{feedBackObj.company}</p>
           <p>{feedBackObj.text}</p>
         </div>
-        <p>{feedBackObj.daysAgo}d</p>
+        {/* <p>{feedBackObj.daysAgo}d</p> */}
+        <p>
+          {feedBackObj.daysAgo === 0 ? "latest" : `${feedBackObj.daysAgo}d`}
+        </p>
       </li>
     </>
   );

@@ -8,8 +8,21 @@ function App() {
   const [feedBackObject, setFeedBackObject] = useState<feedBackObj[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectCompany, setSelectCompany] = useState("");
 
-  const handleAddToArea = (text: string) => {
+  const filteredFeedbackItems = selectCompany
+    ? feedBackObject.filter(
+        (feedbackObject) => feedbackObject.company === selectCompany
+      )
+    : feedBackObject;
+
+  const companyList = feedBackObject
+    .map((item) => item.company)
+    .filter((company, index, array) => {
+      return array.indexOf(company) === index;
+    });
+
+  const handleAddToArea = async (text: string) => {
     const company = text
       .split(" ")
       .find((word) => word.includes("#"))!
@@ -25,6 +38,22 @@ function App() {
     };
 
     setFeedBackObject([...feedBackObject, newObj]);
+
+    await fetch(
+      "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks",
+      {
+        method: "POST",
+        body: JSON.stringify(newObj),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
+  const handleSelectCompany = (company: string) => {
+    setSelectCompany(company);
   };
 
   const fetchFeedbackData = async () => {
@@ -52,12 +81,15 @@ function App() {
     <div className="app">
       <Footer />
       <Master
-        feedBackObject={feedBackObject}
+        feedBackObject={filteredFeedbackItems}
         isLoading={isLoading}
         errorMessage={errorMessage}
         handleAddToArea={handleAddToArea}
       />
-      <HashtagList />
+      <HashtagList
+        companyList={companyList}
+        handleSelectCompany={handleSelectCompany}
+      />
     </div>
   );
 }

@@ -1,7 +1,21 @@
-export default function HashtagList() {
+import HashTagItem from "./HashTagItem";
+
+type companyListProp = {
+  companyList: string[];
+  handleSelectCompany: (company: string) => void;
+};
+
+export default function HashtagList({
+  companyList,
+  handleSelectCompany,
+}: companyListProp) {
   return (
     <ul className="hashtags">
-      <li>
+      {companyList.map((company) => (
+        <HashTagItem company={company} onSelectCompany={handleSelectCompany} />
+      ))}
+
+      {/* <li>
         <button>#TestComp</button>
       </li>
       <li>
@@ -9,7 +23,7 @@ export default function HashtagList() {
       </li>
       <li>
         <button>#TestComp2</button>
-      </li>
+      </li> */}
     </ul>
   );
 }
