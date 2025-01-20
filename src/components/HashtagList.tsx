@@ -1,29 +1,26 @@
+import { useMemo } from "react";
+import { useFeedbackObjectStore } from "../stores/FeedbackItemsStore";
 import HashTagItem from "./HashTagItem";
 
-type companyListProp = {
-  companyList: string[];
-  handleSelectCompany: (company: string) => void;
-};
+export default function HashtagList() {
+  const getCompanyList = useFeedbackObjectStore(
+    (state) => state.getCompanyList
+  );
+  const selectACompany = useFeedbackObjectStore(
+    (state) => state.selectACompany
+  );
 
-export default function HashtagList({
-  companyList,
-  handleSelectCompany,
-}: companyListProp) {
+  const companyList = useMemo(() => getCompanyList(), [getCompanyList]);
+
   return (
     <ul className="hashtags">
       {companyList.map((company) => (
-        <HashTagItem company={company} onSelectCompany={handleSelectCompany} />
+        <HashTagItem
+          key={company}
+          company={company}
+          onSelectCompany={selectACompany}
+        />
       ))}
-
-      {/* <li>
-        <button>#TestComp</button>
-      </li>
-      <li>
-        <button>#TestComp1</button>
-      </li>
-      <li>
-        <button>#TestComp2</button>
-      </li> */}
     </ul>
   );
 }

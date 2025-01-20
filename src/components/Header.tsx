@@ -1,19 +1,18 @@
+import { useFeedbackObjectStore } from "../stores/FeedbackItemsStore";
 import FeedbackForm from "./FeedbackForm";
 import HeroCopy from "./HeroCopy";
 import Logo from "./Logo";
 import Pattern from "./Pattern";
 
-type headerProp = {
-  handleAddToArea: (text: string) => void;
-};
+export default function Header() {
+  const addItemToList = useFeedbackObjectStore((state) => state.addItemToList);
 
-export default function Header({ handleAddToArea }: headerProp) {
   return (
     <header>
       <Pattern />
       <Logo />
       <HeroCopy />
-      <FeedbackForm onAddToArea={handleAddToArea} />
+      <FeedbackForm onAddToArea={addItemToList} />
     </header>
   );
 }
